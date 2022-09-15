@@ -3,11 +3,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
 
-const envKeys = {};
+dotenv.config();
+
+const envKeys = {
+  'process.env.BACKEND_URL': JSON.stringify(process.env.BACKEND_URL),
+};
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.js'),
   output: {
+    publicPath: '/',
     path: path.resolve(__dirname, 'dist'),
   },
   mode: process.env.NODE_ENV || 'development',
