@@ -35,7 +35,7 @@ function Book() {
       });
   }, []);
 
-  return loadingGet ? (
+  return !books[id] ? (
     <Box
       sx={{
         width: '100%',
@@ -45,7 +45,7 @@ function Book() {
         justifyContent: 'center',
       }}
     >
-      <CircularProgress thickness={10} size="4rem" color="secondary" />
+      <CircularProgress thickness={5} size="7rem" color="secondary" />
     </Box>
   ) : (
     <Outlet />

@@ -31,6 +31,7 @@ function SignInMember() {
       .post('/users/members/login', data)
       .then((res) => {
         localStorage.setItem('token', JSON.stringify(res.data.data.token));
+        localStorage.setItem('type', JSON.stringify('member'));
         toast.success(res.data.message);
         reset();
         window.location.href = '/catalog';
