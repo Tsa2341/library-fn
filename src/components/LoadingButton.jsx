@@ -1,12 +1,12 @@
 import { Button, CircularProgress } from '@mui/material';
 import React from 'react';
 
-function LoadingButton({ loading, children, ...props }) {
+function LoadingButton({ loading, children, sx, ...props }) {
   return (
     <Button
       color="secondary"
       variant="contained"
-      sx={{ maxWidth: '150px', width: '100%' }}
+      sx={{ maxWidth: '150px', width: '100%', ...sx }}
       disabled={loading}
       {...props}
     >

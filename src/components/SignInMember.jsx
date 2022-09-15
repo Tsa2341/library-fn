@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axiosInstance from '../axiosInstance';
+import { formatAxiosError } from '../helpers/error.helper';
 import signInMemberSchema from '../validations/signInMemberSchema.validation';
 import InputField from './InputField';
 import LoadingButton from './LoadingButton';
@@ -32,11 +33,10 @@ function SignInMember() {
         localStorage.setItem('token', JSON.stringify(res.data.data.token));
         toast.success(res.data.message);
         reset();
+        window.location.href = '/catalog';
       })
       .catch((error) => {
-        toast.error(
-          (error.response.data && error.response.data.message) || error.message,
-        );
+        toast.error(formatAxiosError(error));
       })
       .finally(() => {
         setLoading(false);

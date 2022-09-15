@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import axiosInstance from '../axiosInstance';
+import { formatAxiosError } from '../helpers/error.helper';
 import signInMemberSchema from '../validations/signInMemberSchema.validation';
 import InputField from './InputField';
 import LoadingButton from './LoadingButton';
@@ -15,7 +16,7 @@ const CustomTypography = styled(Typography)(() => ({
 
 function SignInLibrarian() {
   const {
-    palette: { color, secondary },
+    palette: { color },
   } = useTheme();
   const [loading, setLoading] = useState(false);
 
@@ -31,11 +32,10 @@ function SignInLibrarian() {
         localStorage.setItem('token', JSON.stringify(res.data.data.token));
         toast.success(res.data.message);
         reset();
+        window.location.href = '/account';
       })
       .catch((error) => {
-        toast.error(
-          (error.response.data && error.response.data.message) || error.message,
-        );
+        toast.error(formatAxiosError(error));
       })
       .finally(() => {
         setLoading(false);

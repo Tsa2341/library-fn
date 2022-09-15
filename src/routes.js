@@ -9,6 +9,12 @@ import RegisterMember from './components/RegisterMember';
 import SignInMember from './components/SignInMember';
 import Librarian from './views/Librarian';
 import SignInLibrarian from './components/SignInLibrarian';
+import Logout from './components/Logout';
+import Catalog from './views/Catalog';
+import Search from './components/Search';
+import CategoryBook from './components/CategoryBook';
+import BookDetails from './components/BookDetails';
+import Book from './views/Book';
 
 const routes = createBrowserRouter([
   {
@@ -35,6 +41,35 @@ const routes = createBrowserRouter([
         path: 'librarian',
         element: <Librarian />,
         children: [{ path: 'signIn', element: <SignInLibrarian /> }],
+      },
+      {
+        path: 'catalog',
+        element: <Catalog />,
+        children: [
+          { path: '', element: <Navigate to="search" /> },
+          {
+            path: 'search',
+            element: <Search />,
+          },
+          {
+            path: 'category',
+            element: <CategoryBook />,
+          },
+          {
+            path: 'book/:id',
+            element: <Book />,
+            children: [
+              {
+                path: 'details',
+                element: <BookDetails />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: 'logout',
+        element: <Logout />,
       },
       {
         path: '*',

@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axiosInstance from '../axiosInstance';
+import { formatAxiosError } from '../helpers/error.helper';
 import registerMemberSchema from '../validations/registerMember.validation';
 import InputField from './InputField';
 import LoadingButton from './LoadingButton';
@@ -34,9 +35,7 @@ function RegisterMember() {
         toast.success(res.data.message);
       })
       .catch((error) => {
-        toast.error(
-          (error.response.data && error.response.data.message) || error.message,
-        );
+        toast.error(formatAxiosError(error));
       })
       .finally(() => {
         setLoading(false);

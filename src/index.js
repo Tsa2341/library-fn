@@ -6,11 +6,16 @@ import { RouterProvider } from 'react-router-dom';
 import routes from './routes';
 import store from './redux/store';
 
+const { palette } = createTheme();
+const { augmentColor } = palette;
+const createColor = (mainColor) => augmentColor({ color: { main: mainColor } });
+
 const theme = createTheme({
   palette: {
     color: {
       grey: '#797979',
       faintBlack: '#8C8C8C',
+      modalBg: '#DEFFE5',
     },
     common: { black: '#333333', white: '#FFFFFF' },
     primary: {
@@ -21,6 +26,7 @@ const theme = createTheme({
       main: '#169BD5',
       text: '#fff',
     },
+    customWhite: createColor('#fff'),
     error: {
       main: '#B10007',
       text: '#fff',
@@ -30,12 +36,22 @@ const theme = createTheme({
       text: '#fff',
     },
   },
+  shape: {
+    borderRadius: 0,
+  },
+  components: {
+    MuiIconButton: {
+      styleOverrides: {
+        root: { padding: 0 },
+      },
+    },
+  },
   typography: {
     fontFamily: 'Lato, sans-serif',
-    margin: 0,
     allVariants: {
       color: '#333333',
     },
+    margin: 0,
     '@media (max-width:600px)': {
       fontSize: 14,
     },

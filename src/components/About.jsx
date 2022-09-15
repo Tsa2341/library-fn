@@ -30,6 +30,7 @@ function About() {
           src={main_page_image}
           alt="main page"
           width="100%"
+          height="calc(100vw / 2)"
         />
         <Box
           sx={{

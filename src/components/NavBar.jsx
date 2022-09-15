@@ -45,13 +45,32 @@ function NavBar() {
   const matches = useMediaQuery('(max-width:706px)');
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  const links = [
+  const token = localStorage.getItem('token');
+
+  let links = [];
+
+  if (!token) {
+    links = [
+      { to: '/member/signIn', text: 'sign in' },
+      { to: '/member/register', text: 'registration' },
+      { to: '/librarian/signIn', text: 'librarian sign in' },
+      ...links,
+    ];
+  }
+
+  if (token) {
+    links = [
+      { to: '/account', text: 'account' },
+      { to: '/librarian/manage', text: 'manage membership' },
+      { to: '/logout', text: 'logout' },
+      ...links,
+    ];
+  }
+
+  links = [
     { to: '/about', text: 'about' },
-    { to: '/account', text: 'account' },
     { to: '/catalog', text: 'catalog' },
-    { to: '/member/signIn', text: 'sign in' },
-    { to: '/member/register', text: 'registration' },
-    { to: '/librarian/signIn', text: 'librarian sign in' },
+    ...links,
   ];
 
   return (
@@ -69,13 +88,17 @@ function NavBar() {
           border: `1px solid ${theme.palette.color.grey}`,
         }}
       >
-        <Stack direction="column">
+        <Stack direction="column" sx={{ transition: 'all 1s ease-in-out' }}>
           <LogoText>Kazakh</LogoText>
           <LogoText>National</LogoText>
           <LogoText>Library</LogoText>
         </Stack>
         {!matches ? (
-          <Stack direction="row" spacing="15px">
+          <Stack
+            direction="row"
+            spacing="15px"
+            sx={{ transition: 'all 1s ease-in-out' }}
+          >
             {links.map(({ to, text }) => (
               <LinkText to={to} key={to}>
                 {text}
@@ -87,6 +110,7 @@ function NavBar() {
             onClick={() => {
               setOpenDrawer(true);
             }}
+            sx={{ transition: 'all 1s ease-in-out' }}
           >
             <MenuIcon color="primary" />
           </IconButton>
@@ -110,7 +134,7 @@ function NavBar() {
             setOpenDrawer(false);
           }}
         >
-          <CloseIcon color="white" />
+          <CloseIcon color="customWhite" />
         </IconButton>
         {links.map(({ to, text }) => (
           <LinkText

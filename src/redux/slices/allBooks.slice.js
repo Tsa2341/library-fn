@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  member: {},
+  books: [],
   loadingGet: false,
   error: null,
 };
 
-const memberSlice = createSlice({
-  name: 'member',
+const allBooksSlice = createSlice({
+  name: 'allBooks',
   initialState,
   reducers: {
-    getMember: (state, { payload }) => {
-      return { ...state, member: payload, loadingGet: false };
+    getAllBooks: (state, { payload }) => {
+      return { ...state, books: payload, loadingGet: false };
     },
     loadingGet: (state, _) => {
       return { ...state, loadingGet: true };
@@ -23,9 +23,9 @@ const memberSlice = createSlice({
 });
 
 export const {
-  loadingGet: loadingGetAction,
-  getMember: getMemberAction,
-  error: memberError,
-} = memberSlice.actions;
+  loadingGet: loadingGetAllBooksAction,
+  getAllBooks: getAllBooksAction,
+  error: allBooksErrorAction,
+} = allBooksSlice.actions;
 
-export default memberSlice.reducer;
+export default allBooksSlice.reducer;
