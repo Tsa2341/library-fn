@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import { capitalizeFirstLetter } from '../helpers/word.helpers';
 import Header from './Header';
 import MemberShipStatusModal from './MemberShipStatusModal';
+import { Chart } from 'react-google-charts';
+import generateChartData from '../helpers/createChartData';
 
 const Title = ({ children, sx, ...props }) => {
   const {
@@ -75,6 +77,7 @@ function ManageMember() {
   });
 
   const reservedBooks = member.member_reservations;
+  const data = generateChartData(members[0].check_out_members);
 
   return (
     <>
@@ -87,6 +90,21 @@ function ManageMember() {
         <Header sx={{ marginBottom: '30px' }}>
           {capitalizeFirstLetter(member.name)}
         </Header>
+
+        <Chart
+          chartType="Bar"
+          data={data}
+          width="100%"
+          height="300px"
+          options={{
+            chart: {
+              title: `${capitalizeFirstLetter(member.name)} Check-Out graph`,
+              subtitle: 'Number of check-outs per month',
+            },
+            backgroundColor: 'lightblue',
+          }}
+        />
+
         {/* ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Presonal data ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, */}
         <Title>Personal Data</Title>
         <Box

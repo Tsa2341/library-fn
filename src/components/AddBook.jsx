@@ -87,7 +87,9 @@ function AddBook() {
       >
         <Typography fontSize="1rem">Back</Typography>
       </BackButton>
-      <Header sx={{ marginBottom: '30px' }}>Add Book</Header>
+      <Header sx={{ marginBottom: '30px' }}>
+        {!book ? 'Add book' : 'Edit Book'}
+      </Header>
       <Box
         component="form"
         action=""

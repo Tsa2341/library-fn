@@ -21,6 +21,11 @@ function Search() {
   const { books } = useSelector((state) => state.allBooks);
   const [filteredBooks, setFilteredBooks] = useState([]);
 
+  let type;
+  if (localStorage.getItem('type')) {
+    type = JSON.stringify(localStorage.getItem('type'));
+  }
+
   useEffect(() => {
     dispatch(loadingGetAllBooksAction());
     axiosInstance
@@ -55,18 +60,22 @@ function Search() {
         <Typography fontSize={{ xs: '1rem', md: '1.5rem' }}>
           Insert title, ISBN, author
         </Typography>
-        <Button
-          color="error"
-          variant="contained"
-          onClick={() => {
-            dispatch(clearBookAction());
-            navigate('/catalog/add-book');
-          }}
-        >
-          <Typography color="white" fontSize="0.75rem">
-            Add Book
-          </Typography>
-        </Button>
+        {type === 'librarian' ? (
+          <Button
+            color="error"
+            variant="contained"
+            onClick={() => {
+              dispatch(clearBookAction());
+              navigate('/catalog/add-book');
+            }}
+          >
+            <Typography color="white" fontSize="0.75rem">
+              Add Book
+            </Typography>
+          </Button>
+        ) : (
+          <></>
+        )}
       </Stack>
       <SearchBookInput books={books} setFilteredBooks={setFilteredBooks} />
       <Header marginTop="10px">Category</Header>

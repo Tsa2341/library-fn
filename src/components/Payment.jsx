@@ -2,17 +2,16 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { Box, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import axiosInstance from '../axiosInstance';
 import { formatAxiosError } from '../helpers/error.helper';
+import { getFine } from '../helpers/payment.helper';
 import paymentSchema from '../validations/payment.validation';
 import Header from './Header';
 import InputField from './InputField';
 import LoadingButton from './LoadingButton';
 
 function Payment() {
-  const { book } = useSelector((state) => state.addBook);
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState(undefined);
   const { control, handleSubmit, reset } = useForm({
@@ -25,7 +24,8 @@ function Payment() {
       .then((res) => {
         toast.success(res.data.message);
       })
-      .catch((error) => {
+      .catch(async (error) => {
+        await getFine(setAmount);
         toast.success(formatAxiosError(error));
         reset();
       })
@@ -35,14 +35,7 @@ function Payment() {
   }
 
   useEffect(() => {
-    axiosInstance
-      .get('/payments/fine')
-      .then((res) => {
-        setAmount(parseInt(res.data.data.fine, 10));
-      })
-      .catch((error) => {
-        toast.success(formatAxiosError(error));
-      });
+    getFine(setAmount);
   }, []);
 
   return (

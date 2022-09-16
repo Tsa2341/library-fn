@@ -29,7 +29,10 @@ function MemberShipSearch() {
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '15px',
         }}
       >
         {members.map((member) => (
@@ -40,19 +43,54 @@ function MemberShipSearch() {
               maxWidth: '300px',
               marginX: '15px',
               border: `1px solid ${color.grey}`,
+              display: 'flex',
+              flexFlow: 'column nowrap',
+              alignItems: 'space-between',
+              gap: '15px',
             }}
           >
-            <Stack sx={{ padding: '30px' }} gap="10px">
-              <Typography>
+            <Stack
+              sx={{
+                padding: '30px',
+              }}
+              gap="10px"
+            >
+              <Typography
+                sx={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
                 Name: {capitalizeFirstLetter(member.name)}
               </Typography>
-              <Typography>Library card: {member.card.id}</Typography>
-              <Typography>Email: {member.email}</Typography>
+              <Typography
+                sx={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                Library card: {member.card.id}
+              </Typography>
+              <Typography
+                sx={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                Email: {member.email}
+              </Typography>
             </Stack>
             <Button
               variant="contained"
               color="error"
-              sx={{ borderTop: `1px solid ${color.grey}`, width: '100%' }}
+              sx={{
+                borderTop: `1px solid ${color.grey}`,
+                width: '100%',
+                mt: 'auto',
+              }}
               onClick={() => navigate(`../member/${member.id}`)}
             >
               <Typography py="10px" color="white">

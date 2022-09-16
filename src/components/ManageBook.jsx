@@ -1,9 +1,10 @@
 import { Box, Button, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import { format, isBefore } from 'date-fns';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getFine } from '../helpers/payment.helper';
 import BackButton from './BackButton';
 import Header from './Header';
 
@@ -30,6 +31,7 @@ const CustomButton = ({ children, sx, ...props }) => {
 function ManageBook() {
   const navigate = useNavigate();
   const { member } = useSelector((state) => state.member);
+  const [amount, setAmount] = useState(undefined);
 
   const checkOutBooks = member.check_out_members.filter((checkOut) => {
     if (!checkOut.returned_date) {
@@ -49,6 +51,10 @@ function ManageBook() {
   });
 
   const reservedBooks = member.member_reservations;
+
+  useEffect(() => {
+    getFine(setAmount);
+  });
 
   return (
     <Box
@@ -212,8 +218,14 @@ function ManageBook() {
           <Typography fontSize="1.5rem" mb="10px">
             Fine:
           </Typography>
-          <Typography>Fine Amount: 10$</Typography>
-          <Button variant="contained" color="secondary">
+          <Typography>Fine Amount: {amount}$</Typography>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              navigate('/member/payment');
+            }}
+          >
             <Typography fontSize="0.7rem" color="white">
               Pay Fine
             </Typography>
