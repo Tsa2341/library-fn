@@ -13,7 +13,7 @@ import {
 
 function ManageMembership() {
   const dispatch = useDispatch();
-  const { members } = useSelector((state) => state.allMembers);
+  const { members, loadingGet } = useSelector((state) => state.allMembers);
 
   useEffect(() => {
     dispatch(loadingGetAllMembersAction());
@@ -28,7 +28,7 @@ function ManageMembership() {
       });
   }, []);
 
-  return members.length === 0 ? (
+  return loadingGet ? (
     <Box
       sx={{
         width: '100%',

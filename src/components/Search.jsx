@@ -23,7 +23,7 @@ function Search() {
 
   let type;
   if (localStorage.getItem('type')) {
-    type = JSON.stringify(localStorage.getItem('type'));
+    type = JSON.parse(localStorage.getItem('type'));
   }
 
   useEffect(() => {

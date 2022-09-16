@@ -22,21 +22,17 @@ function Book() {
   }
 
   useEffect(() => {
-    if (books[id]) {
-      navigate('details', { replace: true });
-    } else {
-      dispatch(loadingGetOneBookAction());
-      axiosInstance
-        .get(`/books/${id}`)
-        .then((res) => {
-          dispatch(getOneBookAction(res.data.data.book));
-          navigate('details', { replace: true });
-        })
-        .catch((error) => {
-          dispatch(oneBookErrorAction(formatAxiosError(error)));
-          toast.error(formatAxiosError(error));
-        });
-    }
+    dispatch(loadingGetOneBookAction());
+    axiosInstance
+      .get(`/books/${id}`)
+      .then((res) => {
+        dispatch(getOneBookAction(res.data.data.book));
+        navigate('details', { replace: true });
+      })
+      .catch((error) => {
+        dispatch(oneBookErrorAction(formatAxiosError(error)));
+        toast.error(formatAxiosError(error));
+      });
   }, []);
 
   return !books[id] ? (

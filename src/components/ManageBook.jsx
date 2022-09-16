@@ -43,7 +43,7 @@ function ManageBook() {
   const missedDeadlines = member.check_out_members.filter((checkOut) => {
     if (checkOut.returned_date) {
       return !isBefore(
-        new Date(checkOut.returned_data),
+        new Date(checkOut.returned_date),
         new Date(checkOut.deadline),
       );
     }

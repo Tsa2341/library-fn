@@ -1,5 +1,5 @@
 import { Box, Button, Stack, Typography, useTheme } from '@mui/material';
-import { format, isBefore } from 'date-fns';
+import { format, isAfter, isBefore } from 'date-fns';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -8,6 +8,7 @@ import Header from './Header';
 import MemberShipStatusModal from './MemberShipStatusModal';
 import { Chart } from 'react-google-charts';
 import generateChartData from '../helpers/createChartData';
+import BackButton from './BackButton';
 
 const Title = ({ children, sx, ...props }) => {
   const {
@@ -27,25 +28,6 @@ const Title = ({ children, sx, ...props }) => {
     >
       {children}:
     </Typography>
-  );
-};
-const CustomButton = ({ children, sx, ...props }) => {
-  return (
-    <Button
-      variant="contained"
-      color="primary"
-      sx={{
-        padding: '5px 2px',
-        maxWidth: '300px',
-        width: '100%',
-        ...sx,
-      }}
-      {...props}
-    >
-      <Typography fontSize="0.7rem" color="white">
-        {children}
-      </Typography>
-    </Button>
   );
 };
 
@@ -69,7 +51,7 @@ function ManageMember() {
   const missedDeadlines = member.check_out_members.filter((checkOut) => {
     if (checkOut.returned_date) {
       return !isBefore(
-        new Date(checkOut.returned_data),
+        new Date(checkOut.returned_date),
         new Date(checkOut.deadline),
       );
     }
@@ -87,6 +69,13 @@ function ManageMember() {
           px: { xs: '30px', sm: '60px', md: '70px', lg: '80px' },
         }}
       >
+        <BackButton
+          sx={{
+            marginLeft: '-30px',
+          }}
+        >
+          <Typography fontSize="1rem">Back</Typography>
+        </BackButton>
         <Header sx={{ marginBottom: '30px' }}>
           {capitalizeFirstLetter(member.name)}
         </Header>
@@ -185,26 +174,6 @@ function ManageMember() {
                   <Typography>
                     Check-out number: {checkOutBook.check_out_num}
                   </Typography>
-                  <Stack direction="row" gap="15px" pt="5px">
-                    <CustomButton
-                      onClick={() => {
-                        navigate(
-                          `../extend-book/${checkOutBook.check_out_books.id}`,
-                        );
-                      }}
-                    >
-                      Extend Deadline Date
-                    </CustomButton>
-                    <CustomButton
-                      onClick={() => {
-                        navigate(
-                          `../return-book/${checkOutBook.check_out_books.id}`,
-                        );
-                      }}
-                    >
-                      Return Book
-                    </CustomButton>
-                  </Stack>
                 </Box>
               ))
             ) : (
