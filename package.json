@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "webpack serve --mode development",
-    "build": "webpack --mode production",
-    "lint": "npx eslint --fix .",
+    "dev": "webpack serve",
+    "build": "webpack",
+    "lint": "eslint src/*.js --fix",
     "format": "npx pretty-quick",
     "prepare": "husky install"
   },

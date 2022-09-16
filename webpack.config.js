@@ -14,6 +14,8 @@ module.exports = {
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'dist'),
+    filename: '[name].bundle.js',
+    clean: true,
   },
   mode: process.env.NODE_ENV || 'development',
   resolve: { extensions: ['*', '.js', '.jsx'] },
