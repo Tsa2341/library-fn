@@ -1,6 +1,7 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
 import { formatAxiosError } from '../helpers/error.helper';
 import {
@@ -14,6 +15,7 @@ import Header from './Header';
 import SearchBookInput from './SearchBookInput';
 
 function Search() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { books } = useSelector((state) => state.allBooks);
   const [filteredBooks, setFilteredBooks] = useState([]);
@@ -43,9 +45,25 @@ function Search() {
         gap: { xs: '6px', md: '10px' },
       }}
     >
-      <Typography fontSize={{ xs: '1rem', md: '1.5rem' }}>
-        Insert title, ISBN, author
-      </Typography>
+      <Stack
+        direction={{ xs: 'column', sm: 'row' }}
+        gap="15px"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Typography fontSize={{ xs: '1rem', md: '1.5rem' }}>
+          Insert title, ISBN, author
+        </Typography>
+        <Button
+          color="error"
+          variant="contained"
+          onClick={() => navigate('/catalog/add-book')}
+        >
+          <Typography color="white" fontSize="0.75rem">
+            Add Book
+          </Typography>
+        </Button>
+      </Stack>
       <SearchBookInput books={books} setFilteredBooks={setFilteredBooks} />
       <Header marginTop="10px">Category</Header>
       <Category books={books} />

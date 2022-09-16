@@ -29,8 +29,14 @@ function SignInLibrarian() {
     await axiosInstance
       .post('/users/librarians/login', data)
       .then((res) => {
+        const { id, email, userName } = res.data.data.librarian;
+
         localStorage.setItem('token', JSON.stringify(res.data.data.token));
         localStorage.setItem('type', JSON.stringify('librarian'));
+        localStorage.setItem(
+          'userData',
+          JSON.stringify({ id, email, userName }),
+        );
         toast.success(res.data.message);
         reset();
         window.location.href = '/account';

@@ -30,8 +30,14 @@ function SignInMember() {
     await axiosInstance
       .post('/users/members/login', data)
       .then((res) => {
+        const { id, email, userName, name } = res.data.data.member;
+
         localStorage.setItem('token', JSON.stringify(res.data.data.token));
         localStorage.setItem('type', JSON.stringify('member'));
+        localStorage.setItem(
+          'userData',
+          JSON.stringify({ id, email, userName, name }),
+        );
         toast.success(res.data.message);
         reset();
         window.location.href = '/catalog';

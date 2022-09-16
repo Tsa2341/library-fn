@@ -1,15 +1,9 @@
-import {
-  Box,
-  Button,
-  Stack,
-  styled,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Button, Stack, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { capitalizeFirstLetter } from '../helpers/word.helpers';
+import BackButton from './BackButton';
 import Header from './Header';
 
 const CustomButton = ({ disabled, children, sx, ...props }) => {
@@ -80,12 +74,18 @@ function BookDetails() {
   } = useTheme();
   const { id } = useParams();
   const { books } = useSelector((state) => state.oneBook);
+  const navigate = useNavigate();
   const userType = JSON.parse(localStorage.getItem('type'));
 
   const book = books[id];
 
-  const checkedOut = book.check_out_books.length !== 0;
-  const reserved = book.book_reservations.length !== 0;
+  let checkedOut;
+  let reserved;
+
+  if (userType === 'member') {
+    checkedOut = book.check_out_books.length !== 0;
+    reserved = book.book_reservations.length !== 0;
+  }
 
   return (
     <Box
@@ -94,6 +94,13 @@ function BookDetails() {
         px: { xs: '30px', sm: '60px', md: '70px', lg: '80px' },
       }}
     >
+      <BackButton
+        sx={{
+          marginLeft: '-30px',
+        }}
+      >
+        <Typography fontSize="1rem">Back</Typography>
+      </BackButton>
       <Header sx={{ marginBottom: '30px' }}>{book.title}</Header>
       <Box
         sx={{
@@ -128,17 +135,35 @@ function BookDetails() {
               border: `1px solid ${color.grey}`,
             }}
           />
-          <CustomButton disabled={checkedOut}>
-            {checkedOut
-              ? 'Not available to Check out'
-              : 'Available to Check out'}
-          </CustomButton>
-          {checkedOut && (
-            <CustomButton disabled={reserved}>
-              {!reserved ? 'Available to Reserve' : 'Not available to Reserve'}
-            </CustomButton>
+          {userType === 'member' && (
+            <>
+              <CustomButton
+                disabled={checkedOut}
+                onClick={() => {
+                  navigate('../check-out');
+                }}
+              >
+                {checkedOut
+                  ? 'Not available to Check out'
+                  : 'Available to Check out'}
+              </CustomButton>
+              <>
+                {checkedOut && (
+                  <CustomButton
+                    disabled={reserved}
+                    onClick={() => {
+                      navigate('../reserve');
+                    }}
+                  >
+                    {!reserved
+                      ? 'Available to Reserve'
+                      : 'Not available to Reserve'}
+                  </CustomButton>
+                )}
+              </>
+            </>
           )}
-          {userType !== 'member' && (
+          {userType === 'librarian' && (
             <Stack direction="row" gap="15px" justifyContent="space-around">
               <ActionButton>Edit Book</ActionButton>
               <ActionButton>Delete Book</ActionButton>

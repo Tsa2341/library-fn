@@ -15,6 +15,14 @@ import Search from './components/Search';
 import CategoryBook from './components/CategoryBook';
 import BookDetails from './components/BookDetails';
 import Book from './views/Book';
+import BookCheckOut from './components/BookCheckOut';
+import BookReservation from './components/BookReservation';
+import Account from './views/Account';
+import AccountDetails from './components/AccountDetails';
+import ManageBook from './components/ManageBook';
+import ExtendDeadline from './components/ExtendDeadline';
+import ReturnBook from './components/ReturnBook';
+import AddBook from './components/AddBook';
 
 const routes = createBrowserRouter([
   {
@@ -63,7 +71,42 @@ const routes = createBrowserRouter([
                 path: 'details',
                 element: <BookDetails />,
               },
+              {
+                path: 'check-out',
+                element: <BookCheckOut />,
+              },
+              {
+                path: 'reserve',
+                element: <BookReservation />,
+              },
             ],
+          },
+          { path: 'add-book', element: <AddBook /> },
+        ],
+      },
+      {
+        path: 'account',
+        element: <Account />,
+        children: [
+          {
+            path: '',
+            element: <Navigate to="details" />,
+          },
+          {
+            path: 'details',
+            element: <AccountDetails />,
+          },
+          {
+            path: 'manage-books',
+            element: <ManageBook />,
+          },
+          {
+            path: 'extend-book/:id',
+            element: <ExtendDeadline />,
+          },
+          {
+            path: 'return-book/:id',
+            element: <ReturnBook />,
           },
         ],
       },

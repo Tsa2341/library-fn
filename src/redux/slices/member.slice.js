@@ -23,9 +23,9 @@ const memberSlice = createSlice({
 });
 
 export const {
-  loadingGet: loadingGetAction,
+  loadingGet: loadingGetMemberAction,
   getMember: getMemberAction,
-  error: memberError,
+  error: memberErrorAction,
 } = memberSlice.actions;
 
 export default memberSlice.reducer;

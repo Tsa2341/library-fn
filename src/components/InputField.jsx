@@ -2,7 +2,14 @@ import { Box, TextField, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { Controller } from 'react-hook-form';
 
-function InputField({ label, name, control, size = 'small', ...props }) {
+function InputField({
+  label,
+  name,
+  control,
+  fontSize = '0.7rem',
+  inputProps,
+  ...props
+}) {
   const {
     palette: { secondary },
   } = useTheme();
@@ -16,7 +23,7 @@ function InputField({ label, name, control, size = 'small', ...props }) {
         ...props,
       }}
     >
-      <Typography htmlFor={name} fontSize="0.7rem">
+      <Typography htmlFor={name} fontSize="0.7rem" pb="3px">
         {label}
       </Typography>
       <Controller
@@ -29,11 +36,14 @@ function InputField({ label, name, control, size = 'small', ...props }) {
               variant="outlined"
               value={value}
               onChange={onChange}
-              size={size}
               sx={{
+                borderRadius: '30px',
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '5px',
+                },
                 '& .MuiOutlinedInput-input': {
                   padding: '7px 10px',
-                  fontSize: '0.7rem',
+                  fontSize: `${fontSize}`,
                 },
                 '& .MuiOutlinedInput-root.Mui-focused': {
                   '& .MuiOutlinedInput-notchedOutline': {
@@ -41,6 +51,7 @@ function InputField({ label, name, control, size = 'small', ...props }) {
                   },
                 },
               }}
+              {...inputProps}
             />
             <Typography fontSize="0.7rem" color="error.light">
               {errors[name]

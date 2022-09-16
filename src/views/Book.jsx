@@ -15,24 +15,28 @@ function Book() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
-  const { books, loadingGet } = useSelector((state) => state.oneBook);
+  const { books } = useSelector((state) => state.oneBook);
 
   if (!localStorage.getItem('token')) {
     navigate('/member/signIn');
   }
 
   useEffect(() => {
-    dispatch(loadingGetOneBookAction());
-    axiosInstance
-      .get(`/books/${id}`)
-      .then((res) => {
-        dispatch(getOneBookAction(res.data.data.book));
-        navigate('details');
-      })
-      .catch((error) => {
-        dispatch(oneBookErrorAction(formatAxiosError(error)));
-        toast.error(formatAxiosError(error));
-      });
+    if (books[id]) {
+      navigate('details', { replace: true });
+    } else {
+      dispatch(loadingGetOneBookAction());
+      axiosInstance
+        .get(`/books/${id}`)
+        .then((res) => {
+          dispatch(getOneBookAction(res.data.data.book));
+          navigate('details', { replace: true });
+        })
+        .catch((error) => {
+          dispatch(oneBookErrorAction(formatAxiosError(error)));
+          toast.error(formatAxiosError(error));
+        });
+    }
   }, []);
 
   return !books[id] ? (
