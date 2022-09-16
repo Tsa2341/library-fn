@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
 import { formatAxiosError } from '../helpers/error.helper';
+import { clearBookAction } from '../redux/slices/addBook.slice';
 import {
   allBooksErrorAction,
   getAllBooksAction,
@@ -57,7 +58,10 @@ function Search() {
         <Button
           color="error"
           variant="contained"
-          onClick={() => navigate('/catalog/add-book')}
+          onClick={() => {
+            dispatch(clearBookAction());
+            navigate('/catalog/add-book');
+          }}
         >
           <Typography color="white" fontSize="0.75rem">
             Add Book

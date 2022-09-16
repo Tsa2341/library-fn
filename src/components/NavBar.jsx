@@ -1,7 +1,8 @@
+import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   Box,
   IconButton,
-  Modal,
   Stack,
   styled,
   Typography,
@@ -10,8 +11,6 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
 
 const LogoText = styled(Typography)(({ theme }) => ({
   lineHeight: '1rem',
@@ -61,10 +60,19 @@ function NavBar() {
   if (token) {
     links = [
       { to: '/account', text: 'account' },
-      { to: '/librarian/manage', text: 'manage membership' },
       { to: '/logout', text: 'logout' },
       ...links,
     ];
+
+    const type = JSON.parse(localStorage.getItem('type'));
+    if (type === 'librarian') {
+      links = [
+        { to: '/librarian/manage', text: 'manage membership' },
+        ...links,
+      ];
+    } else {
+      links = [{ to: '/member/payment', text: 'Payment System' }, ...links];
+    }
   }
 
   links = [

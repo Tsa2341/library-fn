@@ -1,17 +1,9 @@
-import {
-  Box,
-  Button,
-  Stack,
-  styled,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { format } from 'date-fns';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { capitalizeFirstLetter } from '../helpers/word.helpers';
-import BackButton from './BackButton';
 import Header from './Header';
 
 function AccountDetails() {

@@ -1,7 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import axiosInstance from '../axiosInstance';
 import { formatAxiosError } from '../helpers/error.helper';
@@ -12,9 +13,10 @@ import InputField from './InputField';
 import LoadingButton from './LoadingButton';
 
 function AddBook() {
+  const { book } = useSelector((state) => state.addBook);
   const [loading, setLoading] = useState(false);
   const [cover, setCover] = useState(undefined);
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset, setValue } = useForm({
     resolver: joiResolver(createBookSchema),
   });
 
@@ -25,23 +27,51 @@ function AddBook() {
       formData.append(item, data[item]);
     });
 
-    if (cover !== '') {
+    if (cover) {
       formData.append('cover', cover);
     }
 
-    await axiosInstance
-      .post('/books', formData)
-      .then((res) => {
-        toast.success(res.data.message);
-        reset();
-      })
-      .catch((error) => {
-        toast.error(formatAxiosError(error));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    if (!book) {
+      await axiosInstance
+        .post('/books', formData)
+        .then((res) => {
+          toast.success(res.data.message);
+          reset();
+        })
+        .catch((error) => {
+          toast.error(formatAxiosError(error));
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      await axiosInstance
+        .patch(`/books/${book.id}`, formData)
+        .then((res) => {
+          toast.success(res.data.message);
+          reset();
+        })
+        .catch((error) => {
+          toast.error(formatAxiosError(error));
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
   }
+
+  useEffect(() => {
+    if (book) {
+      setValue('title', book.title);
+      setValue('ISBN', book.ISBN);
+      setValue('publisher', book.publisher);
+      setValue('about', book.about);
+      setValue('author', book.author);
+      setValue('category', book.category);
+      setValue('language', book.language);
+      setValue('pages', book.pages);
+    }
+  }, []);
 
   return (
     <Box
@@ -149,7 +179,6 @@ function AddBook() {
       <Stack direction="row-reverse">
         <LoadingButton
           loading={loading}
-          component="label"
           variant="contained"
           color="secondary"
           sx={{
@@ -159,7 +188,7 @@ function AddBook() {
           }}
           onClick={handleSubmit(addBook)}
         >
-          <Typography>Add book</Typography>
+          <Typography>{!book ? 'Add book' : 'Edit Book'}</Typography>
         </LoadingButton>
       </Stack>
     </Box>

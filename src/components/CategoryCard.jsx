@@ -7,7 +7,7 @@ import {
   useTheme,
 } from '@mui/material';
 import React from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function CategoryCard({ book, sx, ...props }) {
   const {

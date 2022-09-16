@@ -9,6 +9,7 @@ function Header({ children, ...props }) {
   return (
     <Typography
       fontSize="1.5rem"
+      fontWeight="bold"
       borderBottom={`1px solid ${color.grey}`}
       {...props}
     >

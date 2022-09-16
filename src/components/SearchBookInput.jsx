@@ -1,7 +1,7 @@
+import CancelIcon from '@mui/icons-material/Cancel';
+import SearchIcon from '@mui/icons-material/Search';
 import { IconButton, InputAdornment, TextField, useTheme } from '@mui/material';
 import React, { useRef, useState } from 'react';
-import SearchIcon from '@mui/icons-material/Search';
-import CancelIcon from '@mui/icons-material/Cancel';
 
 function SearchBookInput({ books, setFilteredBooks, sx, ...props }) {
   const {

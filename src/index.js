@@ -1,10 +1,10 @@
-import { Provider } from 'react-redux';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
-import routes from './routes';
 import store from './redux/store';
+import routes from './routes';
 
 const { palette } = createTheme();
 const { augmentColor } = palette;

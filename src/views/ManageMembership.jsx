@@ -6,36 +6,29 @@ import { toast } from 'react-toastify';
 import axiosInstance from '../axiosInstance';
 import { formatAxiosError } from '../helpers/error.helper';
 import {
-  getMemberAction,
-  loadingGetMemberAction,
-  memberErrorAction,
-} from '../redux/slices/member.slice';
+  allMembersErrorAction,
+  getAllMembersAction,
+  loadingGetAllMembersAction,
+} from '../redux/slices/allMembers.slice';
 
-function Account() {
-  const type = JSON.parse(localStorage.getItem('type'));
+function ManageMembership() {
   const dispatch = useDispatch();
-  const { member } = useSelector((state) => state.member);
+  const { members } = useSelector((state) => state.allMembers);
 
   useEffect(() => {
-    dispatch(loadingGetMemberAction());
+    dispatch(loadingGetAllMembersAction());
     axiosInstance
-      .get(type === 'member' ? '/users/members' : '/users/librarians')
+      .get('/users/members/all')
       .then((res) => {
-        let data;
-        if (type === 'member') {
-          data = res.data.data.member;
-        } else {
-          data = res.data.data.librarian;
-        }
-        dispatch(getMemberAction(data));
+        dispatch(getAllMembersAction(res.data.data.members));
       })
       .catch((error) => {
-        dispatch(memberErrorAction(formatAxiosError(error)));
+        dispatch(allMembersErrorAction(formatAxiosError(error)));
         toast.error(formatAxiosError(error));
       });
   }, []);
 
-  return Object.keys(member).length === 0 ? (
+  return members.length === 0 ? (
     <Box
       sx={{
         width: '100%',
@@ -52,4 +45,4 @@ function Account() {
   );
 }
 
-export default Account;
+export default ManageMembership;

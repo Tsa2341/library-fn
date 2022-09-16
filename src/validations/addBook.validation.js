@@ -5,7 +5,7 @@ const createBookSchema = Joi.object({
   publisher: Joi.string().required().empty(),
   title: Joi.string().required().empty(),
   language: Joi.string().required().empty().lowercase(),
-  pages: Joi.string().required().empty(),
+  pages: Joi.any().required().empty(),
   author: Joi.string().required().empty(),
   category: Joi.string().required().empty().lowercase(),
   about: Joi.string().required().empty(),
