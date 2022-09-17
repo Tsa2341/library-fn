@@ -70,8 +70,6 @@ function NavBar() {
         { to: '/librarian/manage', text: 'manage membership' },
         ...links,
       ];
-    } else {
-      links = [{ to: '/member/payment', text: 'Payment System' }, ...links];
     }
   }
 

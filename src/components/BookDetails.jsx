@@ -63,7 +63,16 @@ const Detail = ({ title, children, ...props }) => {
       >
         {title} :{' '}
       </Typography>
-      <Typography fontSize="1rem" mt="10px">
+      <Typography
+        fontSize="1rem"
+        mt="10px"
+        sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          wordBreak: 'break-word',
+          whiteSpace: 'nowrap',
+        }}
+      >
         {children}
       </Typography>
     </Stack>
@@ -109,6 +118,7 @@ function BookDetails() {
         <Header sx={{ marginBottom: '30px' }}>{book.title}</Header>
         <Box
           sx={{
+            width: '100%',
             display: 'grid',
             gridTemplateColumns: { xs: '100%', sm: 'auto 1fr' },
             gridTemplateRows: 'auto auto',
@@ -218,7 +228,14 @@ function BookDetails() {
             >
               About :
             </Typography>
-            <Typography fontSize="1rem">{book.about}</Typography>
+            <Typography
+              fontSize="1rem"
+              sx={{
+                wordBreak: 'break-word',
+              }}
+            >
+              {book.about}
+            </Typography>
           </Box>
         </Box>
       </Box>

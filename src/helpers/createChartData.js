@@ -2,7 +2,7 @@ export default function generateChartData(checkOuts) {
   let data = {};
 
   checkOuts.forEach((checkOut) => {
-    const month = new Date(checkOut.check_out_date).getMonth();
+    const month = new Date(checkOut.check_out_date).getMonth() + 1;
     data[month] = data[month] ? data[month] + 1 : 1;
   });
 

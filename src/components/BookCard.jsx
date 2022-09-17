@@ -25,7 +25,7 @@ function BookCard({ book, sx, ...props }) {
 
   return (
     <>
-      <Card sx={{ maxWidth: '300px', height: '400px', ...sx }} {...props}>
+      <Card sx={{ width: '300px', height: '400px', ...sx }} {...props}>
         <CardMedia
           component="img"
           src={cover}
@@ -36,10 +36,28 @@ function BookCard({ book, sx, ...props }) {
           }}
         />
         <CardContent sx={{ width: '100%' }}>
-          <Typography fontSize="1rem" textAlign="center">
+          <Typography
+            fontSize="1rem"
+            textAlign="center"
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              wordBreak: 'break-word',
+              whiteSpace: 'nowrap',
+            }}
+          >
             {title}
           </Typography>
-          <Typography fontSize="0.75rem" textAlign="center">
+          <Typography
+            fontSize="0.75rem"
+            textAlign="center"
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              wordBreak: 'break-word',
+              whiteSpace: 'nowrap',
+            }}
+          >
             By {author}
           </Typography>
         </CardContent>

@@ -7,6 +7,7 @@ import axiosInstance from '../axiosInstance';
 import { formatAxiosError } from '../helpers/error.helper';
 import { getFine } from '../helpers/payment.helper';
 import paymentSchema from '../validations/payment.validation';
+import BackButton from './BackButton';
 import Header from './Header';
 import InputField from './InputField';
 import LoadingButton from './LoadingButton';
@@ -19,6 +20,7 @@ function Payment() {
   });
 
   function pay(data) {
+    setLoading(true);
     axiosInstance
       .post('/payments', { ...data, amount })
       .then((res) => {
@@ -45,6 +47,13 @@ function Payment() {
         px: { xs: '30px', sm: '60px', md: '70px', lg: '80px' },
       }}
     >
+      <BackButton
+        sx={{
+          marginLeft: '-30px',
+        }}
+      >
+        <Typography fontSize="1rem">Back</Typography>
+      </BackButton>
       <Header sx={{ marginBottom: '30px' }}>Payment Method</Header>
       <Box
         component="form"
@@ -90,7 +99,8 @@ function Payment() {
         >
           <Typography>PAY</Typography>
         </LoadingButton>
-        <Box
+        <LoadingButton
+          loading={amount === undefined}
           sx={{
             height: '36px',
             marginTop: '30px',
@@ -102,7 +112,7 @@ function Payment() {
           }}
         >
           <Typography color="white">SUM: ${amount}.00</Typography>
-        </Box>
+        </LoadingButton>
       </Stack>
     </Box>
   );

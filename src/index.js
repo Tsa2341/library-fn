@@ -50,6 +50,7 @@ const theme = createTheme({
     fontFamily: 'Lato, sans-serif',
     allVariants: {
       color: '#333333',
+      wordBreak: 'break-word',
     },
     margin: 0,
     '@media (max-width:600px)': {

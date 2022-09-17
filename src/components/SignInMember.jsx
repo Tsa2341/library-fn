@@ -9,6 +9,7 @@ import { formatAxiosError } from '../helpers/error.helper';
 import signInMemberSchema from '../validations/signInMemberSchema.validation';
 import InputField from './InputField';
 import LoadingButton from './LoadingButton';
+import PasswordInputField from './PasswordInputField';
 
 const CustomTypography = styled(Typography)(() => ({
   textAlign: 'center',
@@ -104,7 +105,11 @@ function SignInMember() {
           }}
         >
           <InputField label="Username" name="userName" control={control} />
-          <InputField label="Password" name="password" control={control} />
+          <PasswordInputField
+            label="Password"
+            name="password"
+            control={control}
+          />
         </Box>
         <LoadingButton loading={loading} onClick={handleSubmit(signInMember)}>
           Sign In

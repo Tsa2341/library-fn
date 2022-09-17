@@ -9,6 +9,7 @@ import { formatAxiosError } from '../helpers/error.helper';
 import registerMemberSchema from '../validations/registerMember.validation';
 import InputField from './InputField';
 import LoadingButton from './LoadingButton';
+import PasswordInputField from './PasswordInputField';
 
 const CustomTypography = styled(Typography)(() => ({
   textAlign: 'center',
@@ -98,8 +99,12 @@ function RegisterMember() {
           <InputField label="Last Name" name="lastName" control={control} />
           <InputField label="Email" name="email" control={control} />
           <InputField label="Username" name="userName" control={control} />
-          <InputField label="Password" name="password" control={control} />
-          <InputField
+          <PasswordInputField
+            label="Password"
+            name="password"
+            control={control}
+          />
+          <PasswordInputField
             label="Confirm Password"
             name="confirmPassword"
             control={control}
