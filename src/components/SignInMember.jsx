@@ -54,7 +54,7 @@ function SignInMember() {
   return (
     <Box
       sx={{
-        backgroundImage: `url('/images/member_sign_bg.png')`,
+        backgroundImage: `url('../../public/images/member_sign_bg.png')`,
         backgroundColor: 'rgba(255, 255, 255, 0.44)',
         backgroundBlendMode: 'overlay',
         width: '100%',

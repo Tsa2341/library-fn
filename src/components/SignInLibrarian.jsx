@@ -9,6 +9,7 @@ import signInMemberSchema from '../validations/signInMemberSchema.validation';
 import InputField from './InputField';
 import LoadingButton from './LoadingButton';
 import PasswordInputField from './PasswordInputField';
+import bg_image from '../../public/images/member_sign_bg.png';
 
 const CustomTypography = styled(Typography)(() => ({
   textAlign: 'center',
@@ -53,7 +54,7 @@ function SignInLibrarian() {
   return (
     <Box
       sx={{
-        backgroundImage: `url('/images/member_sign_bg.png')`,
+        backgroundImage: `url('../../public/images/member_sign_bg.png')`,
         backgroundColor: 'rgba(255, 255, 255, 0.44)',
         backgroundBlendMode: 'overlay',
         width: '100%',
